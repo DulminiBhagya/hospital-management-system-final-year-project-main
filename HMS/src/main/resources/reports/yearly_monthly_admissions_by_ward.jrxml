@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+                        http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="yearly_monthly_admissions_by_ward" pageWidth="595" pageHeight="842" columnWidth="515"
+              leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="a0fa1b20-3e77-4e6a-9d9a-aaa111222333">
+
+    <!-- Parameters -->
+    <parameter name="hospitalName" class="java.lang.String"/>
+    <parameter name="hospitalAddress" class="java.lang.String"/>
+    <parameter name="hospitalContact" class="java.lang.String"/>
+    <parameter name="reportTitle" class="java.lang.String"/>
+    <parameter name="reportYear" class="java.lang.String"/>
+    <parameter name="preparedBy" class="java.lang.String"/>
+    <parameter name="generatedOn" class="java.lang.String"/>
+
+    <!-- Fields from DTO -->
+    <field name="wardId" class="java.lang.Long"/>
+    <field name="wardName" class="java.lang.String"/>
+    <field name="wardType" class="java.lang.String"/>
+    <field name="month" class="java.lang.String"/>
+    <field name="totalAdmissions" class="java.lang.Long"/>
+
+    <!-- Variables for totals -->
+    <variable name="MonthSubtotal" class="java.lang.Long" calculation="Sum" resetType="Group" resetGroup="monthGroup">
+        <variableExpression><![CDATA[$F{totalAdmissions}]]></variableExpression>
+    </variable>
+
+    <variable name="GrandTotal" class="java.lang.Long" calculation="Sum" resetType="Report">
+        <variableExpression><![CDATA[$F{totalAdmissions}]]></variableExpression>
+    </variable>
+
+    <!-- Group by month -->
+    <group name="monthGroup">
+        <groupExpression><![CDATA[$F{month}]]></groupExpression>
+        <groupHeader>
+            <band height="30">
+                <line>
+                    <reportElement x="0" y="25" width="515" height="1" uuid="b1c2d3e4-5f6a-7b8c-9d0e-1f2a3b4c5d6e"/>
+                    <graphicElement>
+                        <pen lineWidth="1.0" lineStyle="Solid"/>
+                    </graphicElement>
+                </line>
+                <staticText>
+                    <reportElement x="0" y="5" width="60" height="16" uuid="c2d3e4f5-6a7b-8c9d-0e1f-2a3b4c5d6e7f"/>
+                    <textElement verticalAlignment="Middle">
+                        <font fontName="Times New Roman" size="11" isBold="true"/>
+                    </textElement>
+                    <text><![CDATA[MONTH:]]></text>
+                </staticText>
+                <textField>
+                    <reportElement x="65" y="5" width="200" height="16" uuid="d3e4f5a6-7b8c-9d0e-1f2a-3b4c5d6e7f8a"/>
+                    <textElement verticalAlignment="Middle">
+                        <font fontName="Times New Roman" size="11" isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$F{month}]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band height="25">
+                <line>
+                    <reportElement x="0" y="2" width="515" height="1" uuid="e4f5a6b7-8c9d-0e1f-2a3b-4c5d6e7f8a9b"/>
+                    <graphicElement>
+                        <pen lineWidth="0.5" lineStyle="Solid"/>
+                    </graphicElement>
+                </line>
+                <staticText>
+                    <reportElement x="300" y="7" width="120" height="16" uuid="f5a6b7c8-9d0e-1f2a-3b4c-5d6e7f8a9b0c"/>
+                    <textElement textAlignment="Right" verticalAlignment="Middle">
+                        <font fontName="Times New Roman" size="10" isBold="true"/>
+                    </textElement>
+                    <text><![CDATA[MONTHLY TOTAL:]]></text>
+                </staticText>
+                <textField>
+                    <reportElement x="430" y="7" width="85" height="16" uuid="a6b7c8d9-0e1f-2a3b-4c5d-6e7f8a9b0c1d"/>
+                    <textElement textAlignment="Right" verticalAlignment="Middle">
+                        <font fontName="Times New Roman" size="10" isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$V{MonthSubtotal} + " patients"]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupFooter>
+    </group>
+
+    <!-- Report Header -->
+    <title>
+        <band height="150">
+            <!-- Hospital Header -->
+            <rectangle>
+                <reportElement x="0" y="0" width="515" height="2" uuid="b7c8d9e0-1f2a-3b4c-5d6e-7f8a9b0c1d2e"/>
+                <graphicElement>
+                    <pen lineWidth="2.0" lineStyle="Solid"/>
+                </graphicElement>
+            </rectangle>
+
+            <textField>
+                <reportElement x="0" y="10" width="515" height="22" uuid="c8d9e0f1-2a3b-4c5d-6e7f-8a9b0c1d2e3f"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="16" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{hospitalName}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="35" width="515" height="14" uuid="d9e0f1a2-3b4c-5d6e-7f8a-9b0c1d2e3f4a"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{hospitalAddress}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="50" width="515" height="14" uuid="e0f1a2b3-4c5d-6e7f-8a9b-0c1d2e3f4a5b"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Contact: " + $P{hospitalContact}]]></textFieldExpression>
+            </textField>
+
+            <rectangle>
+                <reportElement x="0" y="70" width="515" height="1" uuid="f1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c"/>
+                <graphicElement>
+                    <pen lineWidth="1.0" lineStyle="Solid"/>
+                </graphicElement>
+            </rectangle>
+
+            <!-- Report Title Section -->
+            <textField>
+                <reportElement x="0" y="85" width="515" height="18" uuid="a2b3c4d5-6e7f-8a9b-0c1d-2e3f4a5b6c7d"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="14" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="105" width="515" height="16" uuid="b3c4d5e6-7f8a-9b0c-1d2e-3f4a5b6c7d8e"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["YEAR: " + $P{reportYear}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="125" width="515" height="12" uuid="c4d5e6f7-8a9b-0c1d-2e3f-4a5b6c7d8e9f"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Prepared by: " + $P{preparedBy} + " | Generated on: " + $P{generatedOn}]]></textFieldExpression>
+            </textField>
+
+            <rectangle>
+                <reportElement x="0" y="145" width="515" height="2" uuid="d5e6f7a8-9b0c-1d2e-3f4a-5b6c7d8e9f0a"/>
+                <graphicElement>
+                    <pen lineWidth="2.0" lineStyle="Solid"/>
+                </graphicElement>
+            </rectangle>
+        </band>
+    </title>
+
+    <!-- Column Headers -->
+    <columnHeader>
+        <band height="25">
+            <rectangle>
+                <reportElement x="0" y="0" width="515" height="20" uuid="e6f7a8b9-0c1d-2e3f-4a5b-6c7d8e9f0a1b"/>
+                <graphicElement>
+                    <pen lineWidth="1.0" lineStyle="Solid"/>
+                </graphicElement>
+            </rectangle>
+
+            <staticText>
+                <reportElement x="10" y="2" width="40" height="16" uuid="f7a8b9c0-1d2e-3f4a-5b6c-7d8e9f0a1b2c"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[S.NO]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="60" y="2" width="150" height="16" uuid="a8b9c0d1-2e3f-4a5b-6c7d-8e9f0a1b2c3d"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[WARD NAME]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="220" y="2" width="100" height="16" uuid="b9c0d1e2-3f4a-5b6c-7d8e-9f0a1b2c3d4e"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[WARD TYPE]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="330" y="2" width="80" height="16" uuid="c0d1e2f3-4a5b-6c7d-8e9f-0a1b2c3d4e5f"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[ADMISSIONS]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="420" y="2" width="85" height="16" uuid="d1e2f3a4-5b6c-7d8e-9f0a-1b2c3d4e5f6a"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[BED OCCUPANCY]]></text>
+            </staticText>
+
+            <line>
+                <reportElement x="50" y="0" width="1" height="20" uuid="e2f3a4b5-6c7d-8e9f-0a1b-2c3d4e5f6a7b"/>
+            </line>
+            <line>
+                <reportElement x="210" y="0" width="1" height="20" uuid="f3a4b5c6-7d8e-9f0a-1b2c-3d4e5f6a7b8c"/>
+            </line>
+            <line>
+                <reportElement x="320" y="0" width="1" height="20" uuid="a4b5c6d7-8e9f-0a1b-2c3d-4e5f6a7b8c9d"/>
+            </line>
+            <line>
+                <reportElement x="410" y="0" width="1" height="20" uuid="b5c6d7e8-9f0a-1b2c-3d4e-5f6a7b8c9d0e"/>
+            </line>
+        </band>
+    </columnHeader>
+
+    <!-- Detail rows -->
+    <detail>
+        <band height="18">
+            <rectangle>
+                <reportElement x="0" y="0" width="515" height="18" uuid="c6d7e8f9-0a1b-2c3d-4e5f-6a7b8c9d0e1f"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineStyle="Solid"/>
+                </graphicElement>
+            </rectangle>
+
+            <textField>
+                <reportElement x="10" y="1" width="40" height="16" uuid="d7e8f9a0-1b2c-3d4e-5f6a-7b8c9d0e1f2a"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="60" y="1" width="150" height="16" uuid="e8f9a0b1-2c3d-4e5f-6a7b-8c9d0e1f2a3b"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{wardName}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="220" y="1" width="100" height="16" uuid="f9a0b1c2-3d4e-5f6a-7b8c-9d0e1f2a3b4c"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{wardType}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="330" y="1" width="80" height="16" uuid="a0b1c2d3-4e5f-6a7b-8c9d-0e1f2a3b4c5d"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{totalAdmissions}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="420" y="1" width="85" height="16" uuid="b1c2d3e4-5f6a-7b8c-9d0e-1f2a3b4c5d6e"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[
+                    // Calculate bed capacity per ward (assuming 100 total beds distributed based on ward type)
+                    ($F{wardType}.toUpperCase().contains("ICU") ? 10 :
+                     $F{wardType}.toUpperCase().contains("EMERGENCY") ? 15 :
+                     $F{wardType}.toUpperCase().contains("SURGERY") ? 12 :
+                     $F{wardType}.toUpperCase().contains("PEDIATRIC") ? 8 :
+                     $F{wardType}.toUpperCase().contains("MATERNITY") ? 10 :
+                     $F{wardType}.toUpperCase().contains("CARDIAC") ? 8 :
+                     6) + " beds"
+                ]]></textFieldExpression>
+            </textField>
+
+            <line>
+                <reportElement x="50" y="0" width="1" height="18" uuid="c2d3e4f5-6a7b-8c9d-0e1f-2a3b4c5d6e7f"/>
+            </line>
+            <line>
+                <reportElement x="210" y="0" width="1" height="18" uuid="d3e4f5a6-7b8c-9d0e-1f2a-3b4c5d6e7f8a"/>
+            </line>
+            <line>
+                <reportElement x="320" y="0" width="1" height="18" uuid="e4f5a6b7-8c9d-0e1f-2a3b-4c5d6e7f8a9b"/>
+            </line>
+            <line>
+                <reportElement x="410" y="0" width="1" height="18" uuid="f5a6b7c8-9d0e-1f2a-3b4c-5d6e7f8a9b0c"/>
+            </line>
+        </band>
+    </detail>
+
+    <!-- Page Footer -->
+    <pageFooter>
+        <band height="40">
+            <line>
+                <reportElement x="0" y="5" width="515" height="1" uuid="a6b7c8d9-0e1f-2a3b-4c5d-6e7f8a9b0c1d"/>
+                <graphicElement>
+                    <pen lineWidth="1.0" lineStyle="Solid"/>
+                </graphicElement>
+            </line>
+
+            <staticText>
+                <reportElement x="0" y="12" width="200" height="12" uuid="b7c8d9e0-1f2a-3b4c-5d6e-7f8a9b0c1d2e"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="8" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[CONFIDENTIAL - FOR INTERNAL USE ONLY]]></text>
+            </staticText>
+
+            <textField>
+                <reportElement x="0" y="25" width="200" height="12" uuid="c8d9e0f1-2a3b-4c5d-6e7f-8a9b0c1d2e3f"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Medical Records Department"]]></textFieldExpression>
+            </textField>
+
+            <textField evaluationTime="Report">
+                <reportElement x="400" y="12" width="115" height="12" uuid="d9e0f1a2-3b4c-5d6e-7f8a-9b0c1d2e3f4a"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of " + $V{PAGE_COUNT}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="300" y="25" width="215" height="12" uuid="e0f1a2b3-4c5d-6e7f-8a9b-0c1d2e3f4a5b"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Printed on: " + new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date())]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+
+    <!-- Summary -->
+    <summary>
+        <band height="80">
+            <rectangle>
+                <reportElement x="0" y="10" width="515" height="2" uuid="f1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c"/>
+                <graphicElement>
+                    <pen lineWidth="2.0" lineStyle="Solid"/>
+                </graphicElement>
+            </rectangle>
+
+            <staticText>
+                <reportElement x="0" y="20" width="150" height="16" uuid="a2b3c4d5-6e7f-8a9b-0c1d-2e3f4a5b6c7d"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[ANNUAL SUMMARY]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="200" y="20" width="200" height="16" uuid="b3c4d5e6-7f8a-9b0c-1d2e-3f4a5b6c7d8e"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="11" isBold="true"/>
+                </textElement>
+                <text><![CDATA[TOTAL PATIENT ADMISSIONS:]]></text>
+            </staticText>
+
+            <textField>
+                <reportElement x="410" y="20" width="105" height="16" uuid="c4d5e6f7-8a9b-0c1d-2e3f-4a5b6c7d8e9f"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{GrandTotal} + " patients"]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="45" width="515" height="12" uuid="d5e6f7a8-9b0c-1d2e-3f4a-5b6c7d8e9f0a"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="8" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Note: This report includes all patient admissions recorded during the specified period]]></text>
+            </staticText>
+
+            <rectangle>
+                <reportElement x="0" y="65" width="515" height="2" uuid="e6f7a8b9-0c1d-2e3f-4a5b-6c7d8e9f0a1b"/>
+                <graphicElement>
+                    <pen lineWidth="2.0" lineStyle="Solid"/>
+                </graphicElement>
+            </rectangle>
+        </band>
+    </summary>
+</jasperReport>

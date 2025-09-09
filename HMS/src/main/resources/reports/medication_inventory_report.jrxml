@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+                                  http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="medication_inventory_report"
+              pageWidth="842" pageHeight="595" orientation="Landscape"
+              columnWidth="782" leftMargin="30" rightMargin="30" topMargin="30" bottomMargin="30"
+              uuid="a0b1c2d3-e4f5-6789-abcd-ef0123456789">
+
+    <!-- ========= STYLES ========= -->
+    <style name="th" mode="Opaque" backcolor="#34495E" forecolor="white"
+           fontName="Arial" fontSize="9" isBold="true"/>
+    <style name="td" fontName="Arial" fontSize="8"/>
+    <!-- keep these as aliases (no alignment here; alignment goes on <textElement>) -->
+    <style name="tdCenter" style="td"/>
+    <style name="tdRight" style="td"/>
+    <style name="statusStyle" style="td">
+        <conditionalStyle>
+            <conditionExpression><![CDATA[Boolean.TRUE.equals($F{isLowStock})]]></conditionExpression>
+            <style forecolor="#E74C3C" isBold="true"/>
+        </conditionalStyle>
+        <conditionalStyle>
+            <conditionExpression><![CDATA[Boolean.TRUE.equals($F{isExpiringSoon}) && !Boolean.TRUE.equals($F{isLowStock})]]></conditionExpression>
+            <style forecolor="#F39C12" isBold="true"/>
+        </conditionalStyle>
+    </style>
+    <!-- ========================== -->
+
+    <!-- Parameters -->
+    <parameter name="hospitalName" class="java.lang.String"/>
+    <parameter name="hospitalAddress" class="java.lang.String"/>
+    <parameter name="hospitalContact" class="java.lang.String"/>
+    <parameter name="reportTitle" class="java.lang.String"/>
+    <parameter name="preparedBy" class="java.lang.String"/>
+    <parameter name="generatedOn" class="java.lang.String"/>
+    <parameter name="totalInventoryValue" class="java.math.BigDecimal"/>
+    <parameter name="lowStockAlerts" class="java.lang.Long"/>
+    <parameter name="expiringAlerts" class="java.lang.Long"/>
+    <parameter name="totalMedicationsInReport" class="java.lang.Integer"/>
+
+    <!-- Fields from DTO -->
+    <field name="id" class="java.lang.Long"/>
+    <field name="drugName" class="java.lang.String"/>
+    <field name="genericName" class="java.lang.String"/>
+    <field name="category" class="java.lang.String"/>
+    <field name="strength" class="java.lang.String"/>
+    <field name="dosageForm" class="java.lang.String"/>
+    <field name="manufacturer" class="java.lang.String"/>
+    <field name="batchNumber" class="java.lang.String"/>
+    <field name="currentStock" class="java.lang.Integer"/>
+    <field name="minimumStock" class="java.lang.Integer"/>
+    <field name="unitCost" class="java.math.BigDecimal"/>
+    <field name="expiryDate" class="java.time.LocalDate"/>
+    <field name="stockStatus" class="java.lang.String"/>
+    <field name="daysUntilExpiry" class="java.lang.Long"/>
+    <field name="totalValue" class="java.math.BigDecimal"/>
+    <field name="isLowStock" class="java.lang.Boolean"/>
+    <field name="isExpiringSoon" class="java.lang.Boolean"/>
+
+    <!-- Variables -->
+    <variable name="CategorySubtotal" class="java.math.BigDecimal" calculation="Sum" resetType="Group" resetGroup="categoryGroup">
+        <variableExpression><![CDATA[$F{totalValue}]]></variableExpression>
+    </variable>
+
+    <variable name="GrandTotal" class="java.math.BigDecimal" calculation="Sum" resetType="Report">
+        <variableExpression><![CDATA[$F{totalValue}]]></variableExpression>
+    </variable>
+
+    <!-- Group by category -->
+    <group name="categoryGroup">
+        <groupExpression><![CDATA[$F{category}]]></groupExpression>
+        <groupHeader>
+            <band height="25">
+                <rectangle>
+                    <reportElement x="0" y="5" width="782" height="18" backcolor="#E8F4FD" uuid="b1c2d3e4-f5a6-7890-bcde-f12345678901"/>
+                    <graphicElement>
+                        <pen lineWidth="0.5" lineColor="#2E86C1"/>
+                    </graphicElement>
+                </rectangle>
+                <textField>
+                    <reportElement x="10" y="7" width="200" height="14" uuid="c2d3e4f5-a6b7-8901-cdef-234567890123"/>
+                    <textElement verticalAlignment="Middle">
+                        <font fontName="Arial" size="10" isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["CATEGORY: " + $F{category}.toUpperCase()]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band height="20">
+                <line>
+                    <reportElement x="0" y="2" width="782" height="1" uuid="d3e4f5a6-b7c8-9012-defa-345678901234"/>
+                    <graphicElement>
+                        <pen lineWidth="1.0" lineStyle="Solid" lineColor="#2E86C1"/>
+                    </graphicElement>
+                </line>
+                <staticText>
+                    <reportElement x="600" y="5" width="80" height="12" uuid="e4f5a6b7-c8d9-0123-efab-456789012345"/>
+                    <textElement textAlignment="Right">
+                        <font fontName="Arial" size="9" isBold="true"/>
+                    </textElement>
+                    <text><![CDATA[Category Total:]]></text>
+                </staticText>
+                <textField pattern="#,##0.00">
+                    <reportElement x="685" y="5" width="90" height="12" uuid="f5a6b7c8-d9e0-1234-fabc-567890123456"/>
+                    <textElement textAlignment="Right">
+                        <font fontName="Arial" size="9" isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$V{CategorySubtotal}]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupFooter>
+    </group>
+
+    <!-- Page Header -->
+    <pageHeader>
+        <band height="120">
+            <!-- Hospital Info -->
+            <textField>
+                <reportElement x="0" y="5" width="500" height="18" uuid="a1b2c3d4-e5f6-7890-abcd-123456789abc"/>
+                <textElement>
+                    <font fontName="Arial" size="16" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{hospitalName}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="25" width="500" height="12" uuid="b2c3d4e5-f6a7-8901-bcde-23456789abcd"/>
+                <textElement>
+                    <font fontName="Arial" size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{hospitalAddress}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="38" width="500" height="12" uuid="c3d4e5f6-a7b8-9012-cdef-3456789abcde"/>
+                <textElement>
+                    <font fontName="Arial" size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{hospitalContact}]]></textFieldExpression>
+            </textField>
+
+            <!-- Report Title -->
+            <textField>
+                <reportElement x="0" y="60" width="782" height="20" uuid="d4e5f6a7-b8c9-0123-defa-456789abcdef"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="14" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
+            </textField>
+
+            <!-- Report Info -->
+            <textField>
+                <reportElement x="550" y="85" width="120" height="12" uuid="e5f6a7b8-c9d0-1234-efab-56789abcdef0"/>
+                <textElement>
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Prepared by: " + $P{preparedBy}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="550" y="98" width="120" height="12" uuid="f6a7b8c9-d0e1-2345-fabc-6789abcdef01"/>
+                <textElement>
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Generated: " + $P{generatedOn}]]></textFieldExpression>
+            </textField>
+
+            <!-- Summary Stats -->
+            <rectangle>
+                <reportElement x="0" y="85" width="400" height="30" backcolor="#F8F9FA" uuid="a7b8c9d0-e1f2-3456-abcd-789abcdef012"/>
+                <graphicElement>
+                    <pen lineWidth="1.0" lineColor="#DEE2E6"/>
+                </graphicElement>
+            </rectangle>
+
+            <textField>
+                <reportElement x="10" y="88" width="90" height="10" uuid="b8c9d0e1-f2a3-4567-bcde-89abcdef0123"/>
+                <textElement>
+                    <font fontName="Arial" size="8" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Total Items: " + $P{totalMedicationsInReport}]]></textFieldExpression>
+            </textField>
+
+            <textField pattern="#,##0.00">
+                <reportElement x="10" y="100" width="90" height="10" uuid="c9d0e1f2-a3b4-5678-cdef-9abcdef01234"/>
+                <textElement>
+                    <font fontName="Arial" size="8" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Value: $" + $P{totalInventoryValue}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="120" y="88" width="80" height="10" forecolor="#E74C3C" uuid="d0e1f2a3-b4c5-6789-defa-abcdef012345"/>
+                <textElement>
+                    <font fontName="Arial" size="8" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Low Stock: " + $P{lowStockAlerts}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="120" y="100" width="80" height="10" forecolor="#F39C12" uuid="e1f2a3b4-c5d6-789a-efab-bcdef0123456"/>
+                <textElement>
+                    <font fontName="Arial" size="8" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Expiring: " + $P{expiringAlerts}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageHeader>
+
+    <!-- Column Header -->
+    <columnHeader>
+        <band height="25">
+            <rectangle>
+                <reportElement x="0" y="5" width="782" height="18" backcolor="#34495E" uuid="f2a3b4c5-d6e7-89ab-fabc-cdef01234567"/>
+            </rectangle>
+
+            <staticText>
+                <reportElement x="5" y="7" width="120" height="14" forecolor="white" uuid="a3b4c5d6-e7f8-9abc-abcd-def012345678"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Drug Name]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="130" y="7" width="100" height="14" forecolor="white" uuid="b4c5d6e7-f8a9-abcd-bcde-ef0123456789"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Generic Name]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="235" y="7" width="60" height="14" forecolor="white" uuid="c5d6e7f8-a9ab-bcde-cdef-f0123456789a"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Strength]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="300" y="7" width="80" height="14" forecolor="white" uuid="d6e7f8a9-abbc-defe-defa-0123456789ab"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Batch Number]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="385" y="7" width="50" height="14" forecolor="white" uuid="e7f8a9ab-bcde-efab-efab-123456789abc"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Stock]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="440" y="7" width="50" height="14" forecolor="white" uuid="f8a9abbc-deef-abcd-fabc-23456789abcd"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Unit Cost]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="495" y="7" width="70" height="14" forecolor="white" uuid="a9abbcde-efab-bcde-abcd-3456789abcde"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Expiry Date]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="570" y="7" width="50" height="14" forecolor="white" uuid="abbcddef-abbc-defa-bcde-456789abcdef"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Days Left]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="625" y="7" width="60" height="14" forecolor="white" uuid="bcdeefab-bcde-efab-cdef-56789abcdef0"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Status]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="690" y="7" width="85" height="14" forecolor="white" uuid="cdeefabc-deef-abcd-defa-6789abcdef01"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Total Value]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <!-- Detail Band -->
+    <detail>
+        <band height="16">
+            <!-- Conditional background coloring -->
+            <rectangle>
+                <reportElement x="0" y="0" width="782" height="15" backcolor="#FADBD8" uuid="deefabcd-efab-bcde-efab-789abcdef012">
+                    <printWhenExpression><![CDATA[$F{isLowStock}]]></printWhenExpression>
+                </reportElement>
+                <graphicElement>
+                    <pen lineWidth="0"/>
+                </graphicElement>
+            </rectangle>
+
+            <rectangle>
+                <reportElement x="0" y="0" width="782" height="15" backcolor="#FCF3CF" uuid="eefabcde-fabc-defa-fabc-89abcdef0123">
+                    <printWhenExpression><![CDATA[$F{isExpiringSoon} && !$F{isLowStock}]]></printWhenExpression>
+                </reportElement>
+                <graphicElement>
+                    <pen lineWidth="0"/>
+                </graphicElement>
+            </rectangle>
+
+            <textField isStretchWithOverflow="true">
+                <reportElement x="5" y="2" width="120" height="12" style="td" uuid="fabcdefa-abcd-efab-abcd-9abcdef01234"/>
+                <textElement>
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{drugName}]]></textFieldExpression>
+            </textField>
+
+            <textField isStretchWithOverflow="true">
+                <reportElement x="130" y="2" width="100" height="12" style="td" uuid="abcdefab-bcde-fabc-bcde-abcdef012345"/>
+                <textElement>
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{genericName}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="235" y="2" width="60" height="12" style="td" uuid="bcdefabc-defa-abcd-cdef-bcdef0123456"/>
+                <textElement>
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{strength}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="300" y="2" width="80" height="12" style="td" uuid="cdefabcd-efab-bcde-defa-cdef01234567"/>
+                <textElement>
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{batchNumber}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="385" y="2" width="50" height="12" style="tdCenter" uuid="defabcde-fabc-defa-efab-def012345678"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{currentStock}]]></textFieldExpression>
+            </textField>
+
+            <textField pattern="#,##0.00">
+                <reportElement x="440" y="2" width="50" height="12" style="tdRight" uuid="efabcdef-abcd-efab-fabc-ef0123456789"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{unitCost}]]></textFieldExpression>
+            </textField>
+
+            <textField pattern="yyyy-MM-dd">
+                <reportElement x="495" y="2" width="70" height="12" style="tdCenter" uuid="fabcdef0-bcde-fabc-abcd-f0123456789a"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{expiryDate}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="570" y="2" width="50" height="12" style="tdCenter" uuid="abcdef01-cdef-abcd-bcde-0123456789ab"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{daysUntilExpiry} != null ? $F{daysUntilExpiry} : "N/A"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="625" y="2" width="60" height="12" style="statusStyle" uuid="bcdef012-defa-bcde-cdef-123456789abc"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{stockStatus}]]></textFieldExpression>
+            </textField>
+
+            <textField pattern="#,##0.00">
+                <reportElement x="690" y="2" width="85" height="12" style="tdRight" uuid="cdef0123-efab-cdef-defa-23456789abcd"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{totalValue}]]></textFieldExpression>
+            </textField>
+
+            <!-- Separator line -->
+            <line>
+                <reportElement x="0" y="15" width="782" height="1" uuid="def01234-fabc-defa-efab-3456789abcde"/>
+                <graphicElement>
+                    <pen lineWidth="0.25" lineColor="#BDC3C7"/>
+                </graphicElement>
+            </line>
+        </band>
+    </detail>
+
+    <!-- Page Footer -->
+    <pageFooter>
+        <band height="30">
+            <line>
+                <reportElement x="0" y="5" width="782" height="1" uuid="ef012345-abcd-efab-fabc-456789abcdef"/>
+                <graphicElement>
+                    <pen lineWidth="1.0" lineColor="#34495E"/>
+                </graphicElement>
+            </line>
+
+            <textField>
+                <reportElement x="0" y="10" width="200" height="12" uuid="f0123456-bcde-fabc-abcd-56789abcdef0"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isItalic="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Hospital Management System"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="650" y="10" width="80" height="12" uuid="01234567-cdef-abcd-bcde-6789abcdef01"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+
+            <textField evaluationTime="Report">
+                <reportElement x="730" y="10" width="40" height="12" uuid="12345678-defa-bcde-cdef-789abcdef012"/>
+                <textElement textAlignment="Left">
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+
+    <!-- Summary -->
+    <summary>
+        <band height="50">
+            <rectangle>
+                <reportElement x="0" y="10" width="782" height="30" backcolor="#F4F6F7" uuid="23456789-efab-cdef-defa-89abcdef0123"/>
+                <graphicElement>
+                    <pen lineWidth="2.0" lineColor="#2E86C1"/>
+                </graphicElement>
+            </rectangle>
+
+            <staticText>
+                <reportElement x="600" y="18" width="80" height="14" uuid="3456789a-fabc-defa-efab-9abcdef01234"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[GRAND TOTAL:]]></text>
+            </staticText>
+
+            <textField pattern="#,##0.00">
+                <reportElement x="685" y="18" width="90" height="14" uuid="456789ab-abcd-efab-fabc-abcdef012345"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{GrandTotal}]]></textFieldExpression>
+            </textField>
+        </band>
+    </summary>
+</jasperReport>
