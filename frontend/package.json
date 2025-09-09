@@ -11,11 +11,17 @@
   },
   "dependencies": {
     "axios": "^1.11.0",
+<<<<<<< HEAD
     "chart.js": "^4.5.0",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.539.0",
     "react": "^19.1.0",
     "react-chartjs-2": "^5.3.0",
+=======
+    "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.539.0",
+    "react": "^19.1.0",
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2"
   },
@@ -31,6 +37,10 @@
     "globals": "^16.0.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
+<<<<<<< HEAD
     "vite": "^6.3.6"
+=======
+    "vite": "^6.3.5"
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
   }
 }

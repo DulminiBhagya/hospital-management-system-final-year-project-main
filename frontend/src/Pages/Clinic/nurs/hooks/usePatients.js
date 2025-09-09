@@ -1,11 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
+<<<<<<< HEAD
 const usePatients = (showToast = null) => {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [lastError, setLastError] = useState(null);
+=======
+const usePatients = () => {
+  const [patients, setPatients] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
 
   const fetchPatients = useCallback(async () => {
     try {
@@ -39,6 +46,7 @@ const usePatients = (showToast = null) => {
         errorMessage = 'Network error. Please check your connection.';
       }
       
+<<<<<<< HEAD
       if (showToast) {
         if (error.response?.status === 401) {
           showToast('error', 'Session Expired', errorMessage);
@@ -52,6 +60,9 @@ const usePatients = (showToast = null) => {
       } else {
         console.error(errorMessage);
       }
+=======
+      alert(errorMessage);
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
     } finally {
       setLoading(false);
     }
@@ -64,6 +75,7 @@ const usePatients = (showToast = null) => {
       const jwtToken = localStorage.getItem('jwtToken');
       
       if (!jwtToken) {
+<<<<<<< HEAD
         if (showToast) {
           showToast('error', 'Authentication Required', 'Please log in again.');
         }
@@ -71,12 +83,20 @@ const usePatients = (showToast = null) => {
       }
 
       const response = await axios.post('http://localhost:8080/api/patients/register', patientData, {
+=======
+        alert('Authentication required. Please log in again.');
+        return false;
+      }
+
+      await axios.post('http://localhost:8080/api/patients/register', patientData, {
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${jwtToken}`
         }
       });
 
+<<<<<<< HEAD
       // Check if the backend indicates success
       if (response.data && response.data.isSuccess === false) {
         setLastError(response.data.message || 'Registration failed.');
@@ -86,11 +106,16 @@ const usePatients = (showToast = null) => {
       // Clear any previous errors on successful registration
       setLastError(null);
       await fetchPatients();
+=======
+      await fetchPatients();
+      alert('Patient registered successfully!');
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
       return true;
       
     } catch (error) {
       console.error('Error registering patient:', error);
       
+<<<<<<< HEAD
       // Set error message for component to use
       if (error.response && error.response.data && error.response.data.message) {
         setLastError(error.response.data.message);
@@ -98,6 +123,22 @@ const usePatients = (showToast = null) => {
         setLastError('An error occurred while registering the patient.');
       }
       
+=======
+      if (error.response) {
+        if (error.response.status === 401) {
+          alert('Authentication failed. Please log in again.');
+        } else if (error.response.status === 403) {
+          alert('You do not have permission to register patients.');
+        } else {
+          const errorMessage = error.response.data?.message || `Server error: ${error.response.status}`;
+          alert(`Failed to register patient: ${errorMessage}`);
+        }
+      } else if (error.request) {
+        alert('Failed to register patient. Please check your connection and try again.');
+      } else {
+        alert('An unexpected error occurred. Please try again.');
+      }
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
       return false;
     } finally {
       setSubmitting(false);
@@ -111,6 +152,7 @@ const usePatients = (showToast = null) => {
       const jwtToken = localStorage.getItem('jwtToken');
       
       if (!jwtToken) {
+<<<<<<< HEAD
         if (showToast) {
           showToast('error', 'Authentication Required', 'Please log in again.');
         }
@@ -118,12 +160,20 @@ const usePatients = (showToast = null) => {
       }
 
       const response = await axios.put(`http://localhost:8080/api/patients/${nationalId}`, patientData, {
+=======
+        alert('Authentication required. Please log in again.');
+        return false;
+      }
+
+      await axios.put(`http://localhost:8080/api/patients/${nationalId}`, patientData, {
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${jwtToken}`
         }
       });
 
+<<<<<<< HEAD
       // Check if the backend indicates success
       if (response.data && response.data.isSuccess === false) {
         // Don't show toast here - let components handle their own error messaging
@@ -131,11 +181,16 @@ const usePatients = (showToast = null) => {
       }
 
       await fetchPatients();
+=======
+      await fetchPatients();
+      alert('Patient updated successfully!');
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
       return true;
       
     } catch (error) {
       console.error('Error updating patient:', error);
       
+<<<<<<< HEAD
       if (showToast) {
         if (error.response) {
           if (error.response.status === 401) {
@@ -151,6 +206,21 @@ const usePatients = (showToast = null) => {
         } else {
           showToast('error', 'Unexpected Error', 'An unexpected error occurred. Please try again.');
         }
+=======
+      if (error.response) {
+        if (error.response.status === 401) {
+          alert('Authentication failed. Please log in again.');
+        } else if (error.response.status === 403) {
+          alert('You do not have permission to update patients.');
+        } else {
+          const errorMessage = error.response.data?.message || `Server error: ${error.response.status}`;
+          alert(`Failed to update patient: ${errorMessage}`);
+        }
+      } else if (error.request) {
+        alert('Failed to update patient. Please check your connection and try again.');
+      } else {
+        alert('An unexpected error occurred. Please try again.');
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
       }
       return false;
     } finally {
@@ -159,10 +229,18 @@ const usePatients = (showToast = null) => {
   }, [fetchPatients]);
 
   const deletePatient = useCallback(async (nationalId, patientName) => {
+<<<<<<< HEAD
+=======
+    if (!window.confirm(`Are you sure you want to delete patient ${patientName}? This action cannot be undone.`)) {
+      return false;
+    }
+    
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
     try {
       const jwtToken = localStorage.getItem('jwtToken');
       
       if (!jwtToken) {
+<<<<<<< HEAD
         if (showToast) {
           showToast('error', 'Authentication Required', 'Please log in again.');
         }
@@ -170,11 +248,19 @@ const usePatients = (showToast = null) => {
       }
 
       const response = await axios.delete(`http://localhost:8080/api/patients/${nationalId}`, {
+=======
+        alert('Authentication required. Please log in again.');
+        return false;
+      }
+
+      await axios.delete(`http://localhost:8080/api/patients/${nationalId}`, {
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
       });
 
+<<<<<<< HEAD
       // Check if the backend indicates success
       if (response.data && response.data.isSuccess === false) {
         // Don't show toast here - let components handle their own error messaging
@@ -182,11 +268,16 @@ const usePatients = (showToast = null) => {
       }
 
       await fetchPatients();
+=======
+      await fetchPatients();
+      alert('Patient deleted successfully!');
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
       return true;
       
     } catch (error) {
       console.error('Error deleting patient:', error);
       
+<<<<<<< HEAD
       if (showToast) {
         if (error.response) {
           if (error.response.status === 401) {
@@ -202,6 +293,21 @@ const usePatients = (showToast = null) => {
         } else {
           showToast('error', 'Unexpected Error', 'An unexpected error occurred. Please try again.');
         }
+=======
+      if (error.response) {
+        if (error.response.status === 401) {
+          alert('Authentication failed. Please log in again.');
+        } else if (error.response.status === 403) {
+          alert('You do not have permission to delete patients.');
+        } else {
+          const errorMessage = error.response.data?.message || `Server error: ${error.response.status}`;
+          alert(`Failed to delete patient: ${errorMessage}`);
+        }
+      } else if (error.request) {
+        alert('Failed to delete patient. Please check your connection and try again.');
+      } else {
+        alert('An unexpected error occurred. Please try again.');
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
       }
       return false;
     }
@@ -215,7 +321,10 @@ const usePatients = (showToast = null) => {
     patients,
     loading,
     submitting,
+<<<<<<< HEAD
     lastError,
+=======
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
     fetchPatients,
     registerPatient,
     updatePatient,

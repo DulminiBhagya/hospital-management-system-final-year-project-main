@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useState, useEffect, useCallback } from 'react';
+=======
+import { useState, useEffect } from 'react';
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -12,6 +16,21 @@ export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [successNotification, setSuccessNotification] = useState(null);
 
+<<<<<<< HEAD
+=======
+  // Auto-hide success notification and navigate
+  useEffect(() => {
+    if (successNotification) {
+      const timer = setTimeout(() => {
+        setSuccessNotification(null);
+        navigateBasedOnRole(successNotification.role);
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [successNotification]);
+
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -44,28 +63,42 @@ export default function LoginForm() {
   };
 
   // Role-based navigation function
+<<<<<<< HEAD
   const navigateBasedOnRole = useCallback((role) => {
+=======
+  const navigateBasedOnRole = (role) => {
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
     switch (role) {
       case 'CLINIC_NURSE':
         navigate('/ClinicManagement');
         break;
+<<<<<<< HEAD
       case 'WARD_NURSE':
         navigate('/wardManagement');
         break;
       case 'DIALYSIS_NURSE':
       case 'DIALYSIS_DOCTOR':
         navigate('/dialysisManagement');
+=======
+      case 'ADMIN':
+        navigate('/AdminDashboard');
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
         break;
       case 'DOCTOR':
         navigate('/DoctorDashboard');
         break;
       case 'PHARMACIST':
+<<<<<<< HEAD
         navigate('/pharmacyManagement');
+=======
+        navigate('/PharmacyManagement');
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
         break;
       case 'LAB_TECHNICIAN':
         navigate('/LabManagement');
         break;
       default:
+<<<<<<< HEAD
         navigate('/dialysisManagement');
         break;
     }
@@ -82,6 +115,12 @@ export default function LoginForm() {
       return () => clearTimeout(timer);
     }
   }, [successNotification, navigateBasedOnRole]);
+=======
+        navigate('/Dashboard'); // Default dashboard
+        break;
+    }
+  };
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
 
   const handleSubmit = async () => {
     if (!validateForm()) {

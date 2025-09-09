@@ -239,7 +239,11 @@ export default function AdminLogin() {
             );
             showToast("Access denied. Admin privileges required.", "error");
             break;
+<<<<<<< HEAD
           default:
+=======
+          default: {
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
             const errorMsg =
               err.response.data?.message ||
               "An error occurred. Please try again.";
@@ -250,6 +254,10 @@ export default function AdminLogin() {
               </div>
             );
             showToast(errorMsg, "error");
+<<<<<<< HEAD
+=======
+          }
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
         }
       } else if (err.request) {
         const networkError =
@@ -303,7 +311,11 @@ export default function AdminLogin() {
             </div>
             <div className="space-y-2">
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-800 to-indigo-900 bg-clip-text text-transparent">
+<<<<<<< HEAD
                 Hospital Management Admin Portal
+=======
+                HMS Admin Portal
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
               </h1>
               <div className="flex items-center justify-center space-x-2 text-gray-700">
                 <Shield size={14} className="text-blue-600" />
@@ -463,7 +475,11 @@ export default function AdminLogin() {
               <div className="flex items-center justify-center space-x-1 mb-1">
                 <Heart size={12} className="text-blue-600" />
                 <span className="text-xs font-semibold text-gray-800">
+<<<<<<< HEAD
                   Hospital Management System
+=======
+                  HMS - Hospital Management System
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                 </span>
               </div>
               <p className="text-xs text-gray-600 leading-tight">

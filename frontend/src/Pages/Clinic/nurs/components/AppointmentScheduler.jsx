@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useMemo } from 'react';
 import { Calendar, User, Clock, Plus, UserCheck, Search, Stethoscope, IdCard, X, Edit, Trash2 } from 'lucide-react';
 import StatusBadge from './StatusBadge';
@@ -22,11 +23,25 @@ const AppointmentScheduler = ({ patients }) => {
   const [appointmentSearch, setAppointmentSearch] = useState('');
   const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7)); // Current month (YYYY-MM)
   const [statusFilter, setStatusFilter] = useState('all'); // 'all', 'scheduled', 'completed'
+=======
+import React, { useState, useMemo, useEffect } from 'react';
+import axios from 'axios';
+import { Calendar, User, Clock, Plus, UserCheck, Search } from 'lucide-react';
+import StatusBadge from './StatusBadge';
+
+const AppointmentScheduler = () => {
+  const [patients, setPatients] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [showAppointmentForm, setShowAppointmentForm] = useState(false);
+  const [patientSearch, setPatientSearch] = useState('');
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
   const [newAppointment, setNewAppointment] = useState({
     patientNationalId: '',
     date: '',
     time: ''
   });
+<<<<<<< HEAD
   const [newDoctor, setNewDoctor] = useState({
     name: '',
     empId: '',
@@ -67,10 +82,117 @@ const AppointmentScheduler = ({ patients }) => {
         setPatientSearch('');
         setShowAppointmentForm(false);
       }
+=======
+
+  // Mock 4 doctors data
+  const doctors = [
+    {
+      id: 1,
+      name: 'Dr. Sarah Johnson',
+      specialization: 'Nephrology',
+      avatar: 'SJ',
+      color: 'from-blue-200 to-blue-300',
+      bgColor: 'bg-blue-50',
+      textColor: 'text-blue-700',
+      available: true
+    },
+    {
+      id: 2,
+      name: 'Dr. Michael Chen',
+      specialization: 'Dialysis Specialist',
+      avatar: 'MC',
+      color: 'from-green-200 to-green-300',
+      bgColor: 'bg-green-50',
+      textColor: 'text-green-700',
+      available: true
+    },
+    {
+      id: 3,
+      name: 'Dr. Emily Davis',
+      specialization: 'Transplant Surgery',
+      avatar: 'ED',
+      color: 'from-purple-200 to-purple-300',
+      bgColor: 'bg-purple-50',
+      textColor: 'text-purple-700',
+      available: false
+    },
+    {
+      id: 4,
+      name: 'Dr. Ahmed Hassan',
+      specialization: 'Internal Medicine',
+      avatar: 'AH',
+      color: 'from-orange-200 to-orange-300',
+      bgColor: 'bg-orange-50',
+      textColor: 'text-orange-700',
+      available: true
+    }
+  ];
+
+    // ✅ Fetch patients & appointments on mount
+  useEffect(() => {
+    fetchPatients();
+    fetchAppointments();
+  }, []);
+
+  const fetchPatients = async () => {
+    try {
+      const res = await axios.get('/api/patients'); // Your backend endpoint
+      setPatients(Array.isArray(res.data) ? res.data : []);
+    } catch (err) {
+      console.error('Error fetching patients:', err);
+      setPatients([]);
+    }
+  };
+
+  const fetchAppointments = async () => {
+    try {
+      const res = await axios.get('/api/appointments'); // Your backend endpoint
+      setAppointments(Array.isArray(res.data) ? res.data : []);
+    } catch (err) {
+      console.error('Error fetching appointments:', err);
+      setAppointments([]);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!selectedDoctor) return;
+
+    try {
+      const selectedPatient = patients.find(
+        p => p.nationalId === newAppointment.patientNationalId
+      );
+
+      if (!selectedPatient) return;
+
+      const appointmentData = {
+        patientNationalId: selectedPatient.nationalId,
+        patientName: selectedPatient.fullName,
+        doctorId: selectedDoctor.id,
+        doctorName: selectedDoctor.name,
+        date: newAppointment.date,
+        time: newAppointment.time,
+        status: 'scheduled'
+      };
+
+      const res = await axios.post('/api/appointments', appointmentData);
+      setAppointments(prev => [...prev, res.data]);
+      
+      setNewAppointment({
+        patientNationalId: '',
+        date: '',
+        time: ''
+      });
+      setPatientSearch('');
+      setShowAppointmentForm(false);
+    } catch (err) {
+      console.error('Error scheduling appointment:', err);
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
     }
   };
 
   const getDoctorAppointments = (doctorId) => {
+<<<<<<< HEAD
     let doctorAppointments = appointments.filter(apt => apt.doctorEmployeeId === doctorId);
     
     // Apply date filter
@@ -110,14 +232,26 @@ const AppointmentScheduler = ({ patients }) => {
     }
     
     return doctorAppointments;
+=======
+    if (!Array.isArray(appointments)) return [];
+    return appointments.filter(apt => apt.doctorId === doctorId);
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
   };
 
   // Filter patients based on search
   const filteredPatients = useMemo(() => {
+<<<<<<< HEAD
     return patients.filter(patient =>
       patient.fullName.toLowerCase().includes(patientSearch.toLowerCase()) ||
       String(patient.nationalId).includes(patientSearch) ||
       String(patient.contactNumber).includes(patientSearch)
+=======
+    if (!Array.isArray(patients)) return [];
+    return patients.filter(patient =>
+      patient.fullName?.toLowerCase().includes(patientSearch.toLowerCase()) ||
+      patient.nationalId?.includes(patientSearch) ||
+      patient.contactNumber?.includes(patientSearch)
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
     );
   }, [patients, patientSearch]);
 
@@ -136,6 +270,7 @@ const AppointmentScheduler = ({ patients }) => {
     });
   };
 
+<<<<<<< HEAD
   const handleAddDoctor = async (e) => {
     e.preventDefault();
     
@@ -199,10 +334,13 @@ const AppointmentScheduler = ({ patients }) => {
     setShowConfirmModal(false);
     setDoctorToDelete(null);
   };
+=======
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
 
   return (
     <div className="space-y-8">
       {/* Header */}
+<<<<<<< HEAD
       <div className="flex items-center justify-between">
         <div className="text-center flex-1">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Appointment Scheduling</h2>
@@ -231,6 +369,16 @@ const AppointmentScheduler = ({ patients }) => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {doctors.map((doctor) => (
+=======
+      <div className="text-center">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Appointment Scheduling</h2>
+        <p className="text-gray-600">Select a doctor to view and schedule appointments</p>
+      </div>
+
+      {/* Doctors Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {doctors.map((doctor) => (
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
           <div
             key={doctor.id}
             onClick={() => setSelectedDoctor(doctor)}
@@ -254,11 +402,16 @@ const AppointmentScheduler = ({ patients }) => {
                     {doctor.available ? 'Available' : 'Unavailable'}</span>
                 </div>
                 <div className="mt-4 text-xs text-gray-500">
+<<<<<<< HEAD
                   {getDoctorAppointments(doctor.empId).length} appointments today
+=======
+                  {getDoctorAppointments(doctor.id).length} appointments today
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                 </div>
               </div>
             </div>
             
+<<<<<<< HEAD
             {/* Action Buttons */}
             <div className="absolute top-3 right-3 flex space-x-1">
               <button
@@ -286,15 +439,26 @@ const AppointmentScheduler = ({ patients }) => {
             {/* Selection Indicator */}
             {selectedDoctor?.id === doctor.id && (
               <div className="absolute top-3 left-3">
+=======
+            {/* Selection Indicator */}
+            {selectedDoctor?.id === doctor.id && (
+              <div className="absolute top-3 right-3">
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                 <div className={`w-6 h-6 ${doctor.bgColor} rounded-full flex items-center justify-center border-2 border-${doctor.textColor.split('-')[1]}-200`}>
                   <UserCheck size={14} className={doctor.textColor} />
                 </div>
               </div>
             )}
+<<<<<<< HEAD
             </div>
           ))}
         </div>
       )}
+=======
+          </div>
+        ))}
+      </div>
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
 
       {/* Selected Doctor Section */}
       {selectedDoctor && (
@@ -325,6 +489,7 @@ const AppointmentScheduler = ({ patients }) => {
 
           {/* Appointments List */}
           <div className="p-6">
+<<<<<<< HEAD
             <div className="space-y-4 mb-4">
               <div className="flex items-center justify-between">
                 <h4 className="text-lg font-semibold text-gray-900 flex items-center">
@@ -592,6 +757,37 @@ const AppointmentScheduler = ({ patients }) => {
                     </div>
                   );
                 })}
+=======
+            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+              <Calendar size={20} className="mr-2" />
+              Today's Appointments
+            </h4>
+            
+            {getDoctorAppointments(selectedDoctor.id).length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                <Clock size={48} className="mx-auto mb-4 text-gray-300" />
+                <p className="text-lg font-medium">No appointments scheduled</p>
+                <p className="text-sm">Schedule a patient to get started</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {getDoctorAppointments(selectedDoctor.id).map((appointment) => (
+                  <div key={appointment.id} className="bg-gray-25 rounded-xl p-4 flex items-center justify-between border border-gray-50">
+                    <div className="flex items-center space-x-4">
+                      <div className="text-2xl font-bold text-gray-500">{appointment.time}</div>
+                      <div>
+                        <div className="font-medium text-gray-800">{appointment.patientName}</div>
+                        <div className="text-sm text-gray-400">ID: {appointment.patientNationalId}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <StatusBadge status={appointment.status} />
+                      <button className="text-blue-400 hover:text-blue-600 font-medium text-sm">Edit</button>
+                      <button className="text-red-400 hover:text-red-600 font-medium text-sm">Cancel</button>
+                    </div>
+                  </div>
+                ))}
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
               </div>
             )}
           </div>
@@ -715,10 +911,16 @@ const AppointmentScheduler = ({ patients }) => {
               <div className="flex space-x-3 pt-4">
                 <button
                   type="submit"
+<<<<<<< HEAD
                   disabled={appointmentSubmitting}
                   className="flex-1 bg-blue-400 hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed text-white py-3 rounded-xl font-medium transition-colors shadow-sm"
                 >
                   {appointmentSubmitting ? 'Scheduling...' : 'Schedule Appointment'}
+=======
+                  className="flex-1 bg-blue-400 hover:bg-blue-500 text-white py-3 rounded-xl font-medium transition-colors shadow-sm"
+                >
+                  Schedule Appointment
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                 </button>
                 <button
                   type="button"
@@ -732,6 +934,7 @@ const AppointmentScheduler = ({ patients }) => {
           </div>
         </div>
       )}
+<<<<<<< HEAD
 
       {/* Add Doctor Form Modal */}
       {showAddDoctorForm && (
@@ -918,6 +1121,8 @@ const AppointmentScheduler = ({ patients }) => {
 
       {/* Toast Notifications */}
       <ToastContainer toasts={toasts} onClose={removeToast} />
+=======
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
     </div>
   );
 };

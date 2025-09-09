@@ -12,7 +12,11 @@ const Header = ({ todayStats }) => {
             </div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-800 to-indigo-900 bg-clip-text text-transparent">
+<<<<<<< HEAD
                 Hospital Management System
+=======
+                HMS - Hospital Management
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
               </h1>
               <div className="flex items-center space-x-4 mt-2">
                 <p className="text-gray-700 text-sm font-medium flex items-center">

@@ -51,6 +51,69 @@ const ROLES = [
   { value: 'PHARMACIST', label: 'Pharmacist', color: 'bg-red-100 text-red-700 border-red-200', category: 'support' }
 ];
 
+<<<<<<< HEAD
+=======
+// Doctor specializations
+const SPECIALIZATIONS = [
+  { value: 'NEPHROLOGY', label: 'Nephrology' },
+  { value: 'DIALYSIS', label: 'Dialysis' },
+  { value: 'TRANSPLANT', label: 'Transplant Surgery' },
+  { value: 'INTERNAL_MEDICINE', label: 'Internal Medicine' },
+  { value: 'CARDIOLOGY', label: 'Cardiology' },
+  { value: 'UROLOGY', label: 'Urology' },
+  { value: 'GENERAL_SURGERY', label: 'General Surgery' },
+  { value: 'ANESTHESIOLOGY', label: 'Anesthesiology' },
+  { value: 'PATHOLOGY', label: 'Pathology' },
+  { value: 'RADIOLOGY', label: 'Radiology' }
+];
+
+// Department options
+const DEPARTMENTS = [
+  { value: 'NEPHROLOGY', label: 'Nephrology Department' },
+  { value: 'DIALYSIS_UNIT', label: 'Dialysis Unit' },
+  { value: 'TRANSPLANT_UNIT', label: 'Transplant Unit' },
+  { value: 'ICU', label: 'Intensive Care Unit' },
+  { value: 'GENERAL_WARD', label: 'General Ward' },
+  { value: 'OUTPATIENT', label: 'Outpatient Department' },
+  { value: 'EMERGENCY', label: 'Emergency Department' },
+  { value: 'LABORATORY', label: 'Laboratory' },
+  { value: 'RADIOLOGY', label: 'Radiology Department' }
+];
+
+// Nurse specializations
+const NURSE_SPECIALIZATIONS = [
+  { value: 'NEPHROLOGY_NURSING', label: 'Nephrology Nursing' },
+  { value: 'DIALYSIS_NURSING', label: 'Dialysis Nursing' },
+  { value: 'CRITICAL_CARE', label: 'Critical Care Nursing' },
+  { value: 'TRANSPLANT_NURSING', label: 'Transplant Nursing' },
+  { value: 'GENERAL_NURSING', label: 'General Nursing' },
+  { value: 'PEDIATRIC_NURSING', label: 'Pediatric Nursing' },
+  { value: 'SURGICAL_NURSING', label: 'Surgical Nursing' },
+  { value: 'EMERGENCY_NURSING', label: 'Emergency Nursing' },
+  { value: 'INFECTION_CONTROL', label: 'Infection Control' }
+];
+
+// Nurse shifts
+const NURSE_SHIFTS = [
+  { value: 'MORNING', label: 'Morning (6:00 AM - 2:00 PM)' },
+  { value: 'EVENING', label: 'Evening (2:00 PM - 10:00 PM)' },
+  { value: 'NIGHT', label: 'Night (10:00 PM - 6:00 AM)' },
+  { value: 'ROTATING', label: 'Rotating Shifts' }
+];
+
+// Hospital wards
+const WARDS = [
+  { value: 'GENERAL_WARD', label: 'General Ward' },
+  { value: 'ICU', label: 'Intensive Care Unit' },
+  { value: 'DIALYSIS_WARD', label: 'Dialysis Ward' },
+  { value: 'NEPHROLOGY_WARD', label: 'Nephrology Ward' },
+  { value: 'TRANSPLANT_WARD', label: 'Transplant Ward' },
+  { value: 'EMERGENCY_WARD', label: 'Emergency Ward' },
+  { value: 'PEDIATRIC_WARD', label: 'Pediatric Ward' },
+  { value: 'SURGICAL_WARD', label: 'Surgical Ward' }
+];
+
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
 // Role categories for filtering
 const ROLE_CATEGORIES = [
   { value: '', label: 'All Roles' },
@@ -77,6 +140,7 @@ const getFromStorage = (key) => {
   }
 };
 
+<<<<<<< HEAD
 const setToStorage = (key, value) => {
   try {
     localStorage.setItem(key, value);
@@ -85,6 +149,8 @@ const setToStorage = (key, value) => {
   }
 };
 
+=======
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
 const isTokenExpired = (token) => {
   if (!token) return true;
   try {
@@ -125,6 +191,7 @@ const validatePassword = (password) => {
   return null;
 };
 
+<<<<<<< HEAD
 const debounce = (func, delay) => {
   let timeoutId;
   return (...args) => {
@@ -132,6 +199,8 @@ const debounce = (func, delay) => {
     timeoutId = setTimeout(() => func(...args), delay);
   };
 };
+=======
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
 
 // Toast Component
 const Toast = ({ toast, onClose }) => {
@@ -304,6 +373,14 @@ export default function AdminDashboard() {
   const [isLoadingUsers, setIsLoadingUsers] = useState(true);
   const [fetchError, setFetchError] = useState(null);
   
+<<<<<<< HEAD
+=======
+  // Count states for all staff types
+  const [doctorCount, setDoctorCount] = useState(0);
+  const [isLoadingDoctorCount, setIsLoadingDoctorCount] = useState(true);
+  // Removed unused nurse count state and loading state
+  
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
   // Toast notifications
   const [toasts, setToasts] = useState([]);
   
@@ -322,6 +399,10 @@ export default function AdminDashboard() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+<<<<<<< HEAD
+=======
+  const [isDoctorModalOpen, setIsDoctorModalOpen] = useState(false);
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
   const [isLoading, setIsLoading] = useState(false);
   
   // Form states
@@ -332,6 +413,29 @@ export default function AdminDashboard() {
     role: "",
   });
   
+<<<<<<< HEAD
+=======
+  // Doctor form state
+  const [newDoctor, setNewDoctor] = useState({
+    empId: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    licenseNumber: "",
+    specialization: "",
+    department: "",
+    yearsOfExperience: "",
+    qualification: "",
+    address: "",
+    dateOfBirth: "",
+    emergencyContact: "",
+    bloodGroup: "",
+    joiningDate: ""
+  });
+  
+  
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
   // Validation states
   const [validationErrors, setValidationErrors] = useState({});
   const [passwordStrength, setPasswordStrength] = useState(0);
@@ -366,9 +470,12 @@ export default function AdminDashboard() {
     addToast(message, TOAST_TYPES.WARNING, title);
   }, [addToast]);
 
+<<<<<<< HEAD
   const showInfo = useCallback((message, title = 'Info') => {
     addToast(message, TOAST_TYPES.INFO, title);
   }, [addToast]);
+=======
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
 
   // API functions
   const makeApiCall = useCallback(async (method, endpoint, data = null) => {
@@ -394,6 +501,51 @@ export default function AdminDashboard() {
     return await axios(config);
   }, []);
 
+<<<<<<< HEAD
+=======
+  // Fetch doctor count
+  const fetchDoctorCount = useCallback(async () => {
+    setIsLoadingDoctorCount(true);
+    try {
+      const token = getFromStorage(CONFIG.TOKEN_KEY);
+      
+      if (!token || isTokenExpired(token)) {
+        setDoctorCount(0);
+        return;
+      }
+
+      const response = await fetch(`${CONFIG.API_BASE}/api/doctors`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        // Handle different response formats
+        if (result.data && Array.isArray(result.data)) {
+          setDoctorCount(result.data.length);
+        } else if (result.data && result.data.data && Array.isArray(result.data.data)) {
+          setDoctorCount(result.data.data.length);
+        } else if (Array.isArray(result)) {
+          setDoctorCount(result.length);
+        } else {
+          setDoctorCount(0);
+        }
+      } else {
+        setDoctorCount(0);
+      }
+    } catch (error) {
+      console.error("Failed to fetch doctor count", error);
+      setDoctorCount(0);
+    } finally {
+      setIsLoadingDoctorCount(false);
+    }
+  }, []);
+
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
   const fetchUsers = useCallback(async () => {
     setIsLoadingUsers(true);
     setFetchError(null);
@@ -721,6 +873,200 @@ export default function AdminDashboard() {
     showSuccess(`Exported ${filteredUsers.length} users to CSV file.`, 'Export Complete');
   };
 
+<<<<<<< HEAD
+=======
+  // Doctor form validation
+  const validateDoctorForm = (doctorData) => {
+    const errors = {};
+    
+    if (!doctorData.empId?.trim()) {
+      errors.empId = "Employee ID is required";
+    }
+    
+    if (!doctorData.firstName?.trim()) {
+      errors.firstName = "First name is required";
+    }
+    
+    if (!doctorData.lastName?.trim()) {
+      errors.lastName = "Last name is required";
+    }
+    
+    if (!doctorData.email?.trim()) {
+      errors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(doctorData.email)) {
+      errors.email = "Email is invalid";
+    }
+    
+    if (!doctorData.phone?.trim()) {
+      errors.phone = "Phone number is required";
+    } else if (!/^\+?[\d\s-()]+$/.test(doctorData.phone)) {
+      errors.phone = "Phone number is invalid";
+    }
+    
+    if (!doctorData.licenseNumber?.trim()) {
+      errors.licenseNumber = "License number is required";
+    }
+    
+    if (!doctorData.specialization?.trim()) {
+      errors.specialization = "Specialization is required";
+    }
+    
+    if (!doctorData.department?.trim()) {
+      errors.department = "Department is required";
+    }
+    
+    if (!doctorData.yearsOfExperience?.trim()) {
+      errors.yearsOfExperience = "Years of experience is required";
+    } else if (isNaN(doctorData.yearsOfExperience) || doctorData.yearsOfExperience < 0) {
+      errors.yearsOfExperience = "Years of experience must be a valid number";
+    }
+    
+    if (!doctorData.qualification?.trim()) {
+      errors.qualification = "Qualification is required";
+    }
+    
+    if (!doctorData.dateOfBirth?.trim()) {
+      errors.dateOfBirth = "Date of birth is required";
+    }
+    
+    if (!doctorData.joiningDate?.trim()) {
+      errors.joiningDate = "Joining date is required";
+    }
+    
+    return errors;
+  };
+
+  // Handle doctor creation
+  const handleCreateDoctor = async () => {
+    const errors = validateDoctorForm(newDoctor);
+    setValidationErrors(errors);
+    
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const doctorData = {
+        ...newDoctor,
+        yearsOfExperience: parseInt(newDoctor.yearsOfExperience)
+      };
+
+      console.log('Sending doctor data:', doctorData); // Debug log
+
+      // Use fetch API similar to DoctorManagement component
+      const token = getFromStorage(CONFIG.TOKEN_KEY);
+      
+      console.log('Token from storage:', token ? 'Token exists' : 'No token found'); // Debug log
+      console.log('Token expired check:', token ? isTokenExpired(token) : 'No token to check'); // Debug log
+      
+      // Temporarily bypass token validation to see the real API error
+      console.log('Making API call to:', `${CONFIG.API_BASE}/api/doctors`); // Debug log
+
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+      
+      // Add authorization header only if token exists and is not expired
+      if (token && !isTokenExpired(token)) {
+        headers['Authorization'] = `Bearer ${token}`;
+        console.log('Added Authorization header'); // Debug log
+      } else {
+        console.log('Skipping Authorization header - will see what API returns'); // Debug log
+      }
+
+      const response = await fetch(`${CONFIG.API_BASE}/api/doctors`, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(doctorData)
+      });
+      
+      console.log('API Response status:', response.status); // Debug log
+      
+      if (!response.ok) {
+        let errorMessage = 'An error occurred';
+        try {
+          const errorData = await response.json();
+          console.log('Error response data:', errorData); // Debug log
+          errorMessage = errorData.message || `HTTP ${response.status}`;
+        } catch {
+          errorMessage = `HTTP ${response.status} - ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
+      }
+
+      const result = await response.json();
+      console.log('API Response result:', result); // Debug log
+
+      // Handle different response formats
+      if (
+        result.success === true || 
+        result.isSuccess === true || 
+        result.status === 'success' ||
+        result.statusCode === 200 ||
+        response.status === 201 ||
+        response.status === 200
+      ) {
+        // Success - reset form and close modal
+        setNewDoctor({
+          empId: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          licenseNumber: "",
+          specialization: "",
+          department: "",
+          yearsOfExperience: "",
+          qualification: "",
+          address: "",
+          dateOfBirth: "",
+          emergencyContact: "",
+          bloodGroup: "",
+          joiningDate: ""
+        });
+        setIsDoctorModalOpen(false);
+        setValidationErrors({});
+        
+        // Update doctor count after successful creation
+        fetchDoctorCount();
+        
+        showSuccess('Doctor created successfully!', 'Doctor Created');
+      } else {
+        // Error - show error message
+        const errorMessage = result.message || result.error || result.msg || "Failed to create doctor";
+        setValidationErrors({ general: errorMessage });
+        console.log('Error creating doctor:', errorMessage);
+      }
+    } catch (error) {
+      console.error('Full error object:', error);
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+      
+      // More detailed error handling
+      let errorMessage = 'An unexpected error occurred. Please try again.';
+      
+      if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      if (error.message.includes('fetch')) {
+        errorMessage = 'Connection error. Please check if the server is running.';
+      }
+      
+      if (error.message.includes('JSON')) {
+        errorMessage = 'Server response format error. Please contact administrator.';
+      }
+      
+      console.log('Setting error message:', errorMessage);
+      setValidationErrors({ general: errorMessage });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
   const getRoleBadgeColor = (role) => {
     const roleConfig = ROLES.find(r => r.value === role);
     return roleConfig ? roleConfig.color : "bg-gray-100 text-gray-700 border-gray-300";
@@ -741,7 +1087,12 @@ export default function AdminDashboard() {
   // Initialize component
   useEffect(() => {
     fetchUsers();
+<<<<<<< HEAD
   }, [fetchUsers]);
+=======
+    fetchDoctorCount();
+  }, [fetchUsers, fetchDoctorCount]);
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
 
   // Update password strength when password changes
   useEffect(() => {
@@ -790,6 +1141,7 @@ export default function AdminDashboard() {
             {/* Enhanced Mini Statistics */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {[
+<<<<<<< HEAD
                 { label: 'Total Staff', value: statistics.total, color: 'bg-white border border-gray-200 text-gray-800 shadow-sm', icon: '👥' },
                 { label: 'Doctors', value: statistics.doctors, color: 'bg-blue-50 border border-blue-200 text-blue-800 shadow-sm', icon: '👨‍⚕️' },
                 { label: 'Nurses', value: statistics.nurses, color: 'bg-green-50 border border-green-200 text-green-800 shadow-sm', icon: '👩‍⚕️' },
@@ -801,6 +1153,34 @@ export default function AdminDashboard() {
                     <div className="text-lg font-bold">{isLoadingUsers ? '...' : stat.value}</div>
                     <div className="text-xs font-medium mt-1">{stat.label}</div>
                     <div className="absolute top-1 right-2 text-lg opacity-60">{stat.icon}</div>
+=======
+                { label: 'Total Staff', value: statistics.total, color: 'bg-white border border-gray-200 text-gray-800 shadow-sm', icon: '👥', clickable: false },
+                { label: 'Doctors', value: doctorCount, color: 'bg-blue-50 border border-blue-200 text-blue-800 shadow-sm', icon: '👨‍⚕️', clickable: true, onClick: () => setIsDoctorModalOpen(true) },
+                { label: 'Nurses', value: statistics.nurses, color: 'bg-green-50 border border-green-200 text-green-800 shadow-sm', icon: '👩‍⚕️', clickable: false },
+                { label: 'Support', value: statistics.support, color: 'bg-gray-50 border border-gray-200 text-gray-800 shadow-sm', icon: '🔧', clickable: false }
+              ].map((stat) => (
+                <div key={stat.label} className="group relative">
+                  <div className="absolute inset-0 bg-white opacity-10 rounded-lg blur-sm group-hover:opacity-20 transition-opacity"></div>
+                  <div 
+                    className={`relative ${stat.color} rounded-lg px-4 py-3 text-center hover:scale-105 transition-all duration-200 ${
+                      stat.clickable ? 'cursor-pointer hover:shadow-md hover:border-blue-300 hover:bg-blue-100' : ''
+                    }`}
+                    onClick={stat.clickable ? stat.onClick : undefined}
+                    title={stat.clickable ? `Click to add ${stat.label.toLowerCase()}` : undefined}
+                  >
+                    <div className="text-lg font-bold">
+                      {stat.label === 'Doctors' ? (isLoadingDoctorCount ? '...' : stat.value) : (isLoadingUsers ? '...' : stat.value)}
+                    </div>
+                    <div className="text-xs font-medium mt-1">{stat.label}</div>
+                    <div className="absolute top-1 right-2 text-lg opacity-60">{stat.icon}</div>
+                    {stat.clickable && (
+                      <div className="absolute top-1 left-2 text-xs opacity-60 group-hover:opacity-100 transition-opacity">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                      </div>
+                    )}
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                   </div>
                 </div>
               ))}
@@ -1030,7 +1410,11 @@ export default function AdminDashboard() {
           <div className="bg-white shadow-xl rounded-2xl border border-gray-200 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="min-w-full">
+<<<<<<< HEAD
                 <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
+=======
+                <thead className="bg-gray-50">
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                   <tr>
                     <th className="px-6 py-4 text-left">
                       <div className="flex items-center">
@@ -1096,7 +1480,11 @@ export default function AdminDashboard() {
                       </td>
                     </tr>
                   ) : paginatedUsers.length > 0 ? (
+<<<<<<< HEAD
                     paginatedUsers.map((user, index) => (
+=======
+                    paginatedUsers.map((user) => (
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                       <tr key={user.id} className="hover:bg-gray-50 transition-all duration-200 group">
                         <td className="px-6 py-5">
                           <input
@@ -1116,7 +1504,11 @@ export default function AdminDashboard() {
                         <td className="px-6 py-5 whitespace-nowrap">
                           <div className="flex items-center space-x-4">
                             <div className="relative">
+<<<<<<< HEAD
                               <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 flex items-center justify-center shadow-lg group-hover:shadow-blue-300 transition-shadow">
+=======
+                              <div className="h-12 w-12 rounded-lg bg-blue-500 flex items-center justify-center shadow-sm transition-shadow">
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                                 <span className="text-white font-bold text-sm">{user.username[0].toUpperCase()}</span>
                               </div>
                               <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white shadow-sm"></div>
@@ -1215,7 +1607,11 @@ export default function AdminDashboard() {
 
             {/* Enhanced Pagination */}
             {totalPages > 1 && (
+<<<<<<< HEAD
               <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 flex items-center justify-between border-t border-gray-200">
+=======
+              <div className="bg-gray-50 px-6 py-4 flex items-center justify-between border-t border-gray-200">
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                 <div className="flex-1 flex justify-between sm:hidden">
                   <button
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
@@ -1686,6 +2082,430 @@ export default function AdminDashboard() {
           </div>
         </div>
       )}
+<<<<<<< HEAD
+=======
+
+      {/* Doctor Add Modal */}
+      {isDoctorModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm overflow-y-auto h-full w-full z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-4xl border border-gray-200 transform animate-in slide-in-from-bottom-4 duration-300 max-h-[90vh] overflow-y-auto">
+            <div className="bg-blue-600 px-8 py-6 rounded-t-3xl flex justify-between items-center">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-white bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white">Add New Doctor</h3>
+                  <p className="text-blue-100 text-sm">Add a new doctor to the hospital staff</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => {
+                  setIsDoctorModalOpen(false);
+                  setNewDoctor({
+                    empId: "",
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    phone: "",
+                    licenseNumber: "",
+                    specialization: "",
+                    department: "",
+                    yearsOfExperience: "",
+                    qualification: "",
+                    address: "",
+                    dateOfBirth: "",
+                    emergencyContact: "",
+                    bloodGroup: "",
+                    joiningDate: ""
+                  });
+                  setValidationErrors({});
+                }}
+                className="text-white hover:text-gray-200 transition-colors hover:bg-white hover:bg-opacity-10 rounded-xl p-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <form onSubmit={(e) => { e.preventDefault(); handleCreateDoctor(); }} className="p-8 space-y-8">
+              {/* General Error */}
+              {validationErrors.general && (
+                <div className="bg-gradient-to-r from-red-50 to-red-100 border-l-4 border-red-500 rounded-xl p-4 animate-in slide-in-from-top-2">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                      <svg className="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-semibold text-red-800">Error</p>
+                      <p className="text-sm text-red-700">{validationErrors.general}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Personal Information Section */}
+              <div className="bg-gray-50 rounded-2xl p-6">
+                <h4 className="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                  <span className="mr-2">👤</span>
+                  Personal Information
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Employee ID */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800 flex items-center space-x-1">
+                      <span>🆔</span>
+                      <span>Employee ID</span>
+                      <span className="text-red-500 text-xs">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g., DOC-2024-001"
+                      value={newDoctor.empId}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, empId: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 font-mono ${
+                        validationErrors.empId ? 'border-red-300 focus:ring-red-500 bg-red-50' : 'border-gray-200 focus:ring-blue-500 hover:border-gray-300'
+                      }`}
+                    />
+                    {validationErrors.empId && (
+                      <p className="text-sm text-red-600 flex items-center space-x-1">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>{validationErrors.empId}</span>
+                      </p>
+                    )}
+                  </div>
+
+                  {/* First Name */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800">
+                      First Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter first name"
+                      value={newDoctor.firstName}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, firstName: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
+                        validationErrors.firstName ? 'border-red-300 focus:ring-red-500 bg-red-50' : 'border-gray-200 focus:ring-blue-500 hover:border-gray-300'
+                      }`}
+                    />
+                    {validationErrors.firstName && (
+                      <p className="text-sm text-red-600">{validationErrors.firstName}</p>
+                    )}
+                  </div>
+
+                  {/* Last Name */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800">
+                      Last Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter last name"
+                      value={newDoctor.lastName}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, lastName: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
+                        validationErrors.lastName ? 'border-red-300 focus:ring-red-500 bg-red-50' : 'border-gray-200 focus:ring-blue-500 hover:border-gray-300'
+                      }`}
+                    />
+                    {validationErrors.lastName && (
+                      <p className="text-sm text-red-600">{validationErrors.lastName}</p>
+                    )}
+                  </div>
+
+                  {/* Date of Birth */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800">
+                      Date of Birth <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="date"
+                      value={newDoctor.dateOfBirth}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, dateOfBirth: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
+                        validationErrors.dateOfBirth ? 'border-red-300 focus:ring-red-500 bg-red-50' : 'border-gray-200 focus:ring-blue-500 hover:border-gray-300'
+                      }`}
+                    />
+                    {validationErrors.dateOfBirth && (
+                      <p className="text-sm text-red-600">{validationErrors.dateOfBirth}</p>
+                    )}
+                  </div>
+
+                  {/* Blood Group */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800">Blood Group</label>
+                    <select
+                      value={newDoctor.bloodGroup}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, bloodGroup: e.target.value })}
+                      className="w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 border-gray-200 focus:ring-blue-500 hover:border-gray-300"
+                    >
+                      <option value="">Select blood group</option>
+                      <option value="A+">A+</option>
+                      <option value="A-">A-</option>
+                      <option value="B+">B+</option>
+                      <option value="B-">B-</option>
+                      <option value="AB+">AB+</option>
+                      <option value="AB-">AB-</option>
+                      <option value="O+">O+</option>
+                      <option value="O-">O-</option>
+                    </select>
+                  </div>
+
+                  {/* Address */}
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="block text-sm font-bold text-gray-800">Address</label>
+                    <textarea
+                      placeholder="Enter complete address"
+                      value={newDoctor.address}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, address: e.target.value })}
+                      rows={3}
+                      className="w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 border-gray-200 focus:ring-blue-500 hover:border-gray-300 resize-none"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact Information Section */}
+              <div className="bg-blue-50 rounded-2xl p-6">
+                <h4 className="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                  <span className="mr-2">📞</span>
+                  Contact Information
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Email */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800">
+                      Email <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      placeholder="doctor@hospital.com"
+                      value={newDoctor.email}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, email: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
+                        validationErrors.email ? 'border-red-300 focus:ring-red-500 bg-red-50' : 'border-gray-200 focus:ring-blue-500 hover:border-gray-300'
+                      }`}
+                    />
+                    {validationErrors.email && (
+                      <p className="text-sm text-red-600">{validationErrors.email}</p>
+                    )}
+                  </div>
+
+                  {/* Phone */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800">
+                      Phone <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      placeholder="+94 77 123 4567"
+                      value={newDoctor.phone}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, phone: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
+                        validationErrors.phone ? 'border-red-300 focus:ring-red-500 bg-red-50' : 'border-gray-200 focus:ring-blue-500 hover:border-gray-300'
+                      }`}
+                    />
+                    {validationErrors.phone && (
+                      <p className="text-sm text-red-600">{validationErrors.phone}</p>
+                    )}
+                  </div>
+
+                  {/* Emergency Contact */}
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="block text-sm font-bold text-gray-800">Emergency Contact</label>
+                    <input
+                      type="tel"
+                      placeholder="Emergency contact number"
+                      value={newDoctor.emergencyContact}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, emergencyContact: e.target.value })}
+                      className="w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 border-gray-200 focus:ring-blue-500 hover:border-gray-300"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Professional Information Section */}
+              <div className="bg-green-50 rounded-2xl p-6">
+                <h4 className="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                  <span className="mr-2">🎓</span>
+                  Professional Information
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* License Number */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800">
+                      Medical License Number <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g., SLMC-12345"
+                      value={newDoctor.licenseNumber}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, licenseNumber: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 font-mono ${
+                        validationErrors.licenseNumber ? 'border-red-300 focus:ring-red-500 bg-red-50' : 'border-gray-200 focus:ring-blue-500 hover:border-gray-300'
+                      }`}
+                    />
+                    {validationErrors.licenseNumber && (
+                      <p className="text-sm text-red-600">{validationErrors.licenseNumber}</p>
+                    )}
+                  </div>
+
+                  {/* Specialization */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800">
+                      Specialization <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      value={newDoctor.specialization}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, specialization: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
+                        validationErrors.specialization ? 'border-red-300 focus:ring-red-500 bg-red-50' : 'border-gray-200 focus:ring-blue-500 hover:border-gray-300'
+                      }`}
+                    >
+                      <option value="">Select specialization</option>
+                      {SPECIALIZATIONS.map(spec => (
+                        <option key={spec.value} value={spec.value}>{spec.label}</option>
+                      ))}
+                    </select>
+                    {validationErrors.specialization && (
+                      <p className="text-sm text-red-600">{validationErrors.specialization}</p>
+                    )}
+                  </div>
+
+                  {/* Department */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800">
+                      Department <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      value={newDoctor.department}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, department: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
+                        validationErrors.department ? 'border-red-300 focus:ring-red-500 bg-red-50' : 'border-gray-200 focus:ring-blue-500 hover:border-gray-300'
+                      }`}
+                    >
+                      <option value="">Select department</option>
+                      {DEPARTMENTS.map(dept => (
+                        <option key={dept.value} value={dept.value}>{dept.label}</option>
+                      ))}
+                    </select>
+                    {validationErrors.department && (
+                      <p className="text-sm text-red-600">{validationErrors.department}</p>
+                    )}
+                  </div>
+
+                  {/* Years of Experience */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800">
+                      Years of Experience <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      max="50"
+                      placeholder="e.g., 5"
+                      value={newDoctor.yearsOfExperience}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, yearsOfExperience: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
+                        validationErrors.yearsOfExperience ? 'border-red-300 focus:ring-red-500 bg-red-50' : 'border-gray-200 focus:ring-blue-500 hover:border-gray-300'
+                      }`}
+                    />
+                    {validationErrors.yearsOfExperience && (
+                      <p className="text-sm text-red-600">{validationErrors.yearsOfExperience}</p>
+                    )}
+                  </div>
+
+                  {/* Qualification */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800">
+                      Qualification <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g., MBBS, MD (Nephrology)"
+                      value={newDoctor.qualification}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, qualification: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
+                        validationErrors.qualification ? 'border-red-300 focus:ring-red-500 bg-red-50' : 'border-gray-200 focus:ring-blue-500 hover:border-gray-300'
+                      }`}
+                    />
+                    {validationErrors.qualification && (
+                      <p className="text-sm text-red-600">{validationErrors.qualification}</p>
+                    )}
+                  </div>
+
+                  {/* Joining Date */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-bold text-gray-800">
+                      Joining Date <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="date"
+                      value={newDoctor.joiningDate}
+                      onChange={(e) => setNewDoctor({ ...newDoctor, joiningDate: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
+                        validationErrors.joiningDate ? 'border-red-300 focus:ring-red-500 bg-red-50' : 'border-gray-200 focus:ring-blue-500 hover:border-gray-300'
+                      }`}
+                    />
+                    {validationErrors.joiningDate && (
+                      <p className="text-sm text-red-600">{validationErrors.joiningDate}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsDoctorModalOpen(false);
+                    setNewDoctor({
+                      empId: "",
+                      firstName: "",
+                      lastName: "",
+                      email: "",
+                      phone: "",
+                      licenseNumber: "",
+                      specialization: "",
+                      department: "",
+                      yearsOfExperience: "",
+                      qualification: "",
+                      address: "",
+                      dateOfBirth: "",
+                      emergencyContact: "",
+                      bloodGroup: "",
+                      joiningDate: ""
+                    });
+                    setValidationErrors({});
+                  }}
+                  className="px-6 py-3 text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-200 border border-gray-300 hover:border-gray-400 transform hover:scale-105"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="px-8 py-3 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed rounded-xl transition-all duration-200 flex items-center space-x-2 shadow-sm hover:shadow-md transform hover:scale-105 disabled:transform-none"
+                >
+                  {isLoading && (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  )}
+                  <span>{isLoading ? 'Adding Doctor...' : 'Add Doctor'}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
       </div>
     </div>
   );

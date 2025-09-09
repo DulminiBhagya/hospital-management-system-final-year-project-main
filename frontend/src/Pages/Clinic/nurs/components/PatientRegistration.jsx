@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { UserPlus, User, XCircle, AlertTriangle, CheckCircle } from 'lucide-react';
 import { ToastContainer } from './Toast';
 
@@ -10,6 +11,15 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
     nationalId: '',
     firstName: '',
     lastName: '',
+=======
+import { UserPlus, User, XCircle } from 'lucide-react';
+
+const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting }) => {
+  const [showPatientForm, setShowPatientForm] = useState(false);
+  const [newPatient, setNewPatient] = useState({
+    nationalId: '',
+    fullName: '',
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
     address: '',
     dateOfBirth: '',
     contactNumber: '',
@@ -17,6 +27,7 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
     gender: ''
   });
 
+<<<<<<< HEAD
   // Toast utility functions
   const addToast = (toast) => {
     const id = Date.now() + Math.random();
@@ -134,6 +145,22 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
         title: 'System Error',
         message: 'An unexpected error occurred. Please contact support.',
       });
+=======
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const success = await onRegisterPatient(newPatient);
+    if (success) {
+      setNewPatient({
+        nationalId: '',
+        fullName: '',
+        address: '',
+        dateOfBirth: '',
+        contactNumber: '',
+        emergencyContactNumber: '',
+        gender: ''
+      });
+      setShowPatientForm(false);
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
     }
   };
 
@@ -191,6 +218,7 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
                     type="text"
                     value={newPatient.nationalId}
                     onChange={(e) => setNewPatient({...newPatient, nationalId: e.target.value})}
+<<<<<<< HEAD
                     className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
                       errors.nationalId 
                         ? 'border-red-300 focus:ring-red-500 focus:border-red-500 bg-red-50'
@@ -250,6 +278,23 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
                       {errors.lastName}
                     </p>
                   )}
+=======
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="200112345678"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                  <input
+                    type="text"
+                    value={newPatient.fullName}
+                    onChange={(e) => setNewPatient({...newPatient, fullName: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Full Name"
+                    required
+                  />
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                 </div>
               </div>
               
@@ -258,6 +303,7 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
                 <textarea
                   value={newPatient.address}
                   onChange={(e) => setNewPatient({...newPatient, address: e.target.value})}
+<<<<<<< HEAD
                   className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
                     errors.address 
                       ? 'border-red-300 focus:ring-red-500 focus:border-red-500 bg-red-50'
@@ -273,6 +319,13 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
                     {errors.address}
                   </p>
                 )}
+=======
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Full Address"
+                  rows="2"
+                  required
+                />
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -282,6 +335,7 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
                     type="date"
                     value={newPatient.dateOfBirth}
                     onChange={(e) => setNewPatient({...newPatient, dateOfBirth: e.target.value})}
+<<<<<<< HEAD
                     className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
                       errors.dateOfBirth 
                         ? 'border-red-300 focus:ring-red-500 focus:border-red-500 bg-red-50'
@@ -295,17 +349,26 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
                       {errors.dateOfBirth}
                     </p>
                   )}
+=======
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Gender</label>
                   <select
                     value={newPatient.gender}
                     onChange={(e) => setNewPatient({...newPatient, gender: e.target.value})}
+<<<<<<< HEAD
                     className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
                       errors.gender 
                         ? 'border-red-300 focus:ring-red-500 focus:border-red-500 bg-red-50'
                         : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
                     }`}
+=======
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                     required
                   >
                     <option value="">Select Gender</option>
@@ -313,12 +376,15 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
                   </select>
+<<<<<<< HEAD
                   {errors.gender && (
                     <p className="mt-1 text-sm text-red-600 flex items-center">
                       <AlertTriangle size={14} className="mr-1" />
                       {errors.gender}
                     </p>
                   )}
+=======
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                 </div>
               </div>
               
@@ -329,6 +395,7 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
                     type="tel"
                     value={newPatient.contactNumber}
                     onChange={(e) => setNewPatient({...newPatient, contactNumber: e.target.value})}
+<<<<<<< HEAD
                     className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
                       errors.contactNumber 
                         ? 'border-red-300 focus:ring-red-500 focus:border-red-500 bg-red-50'
@@ -343,6 +410,12 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
                       {errors.contactNumber}
                     </p>
                   )}
+=======
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="0771234567"
+                    required
+                  />
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Emergency Contact</label>
@@ -350,6 +423,7 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
                     type="tel"
                     value={newPatient.emergencyContactNumber}
                     onChange={(e) => setNewPatient({...newPatient, emergencyContactNumber: e.target.value})}
+<<<<<<< HEAD
                     className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
                       errors.emergencyContactNumber 
                         ? 'border-red-300 focus:ring-red-500 focus:border-red-500 bg-red-50'
@@ -364,6 +438,12 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
                       {errors.emergencyContactNumber}
                     </p>
                   )}
+=======
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="0712345678"
+                    required
+                  />
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                 </div>
               </div>
               <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200 mt-6">
@@ -422,8 +502,13 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<<<<<<< HEAD
               {patients.slice(-6).map((patient, index) => (
                 <div key={patient.id || patient.nationalId || index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+=======
+              {patients.slice(-6).map((patient) => (
+                <div key={patient.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <h5 className="font-medium text-gray-900">{patient.fullName}</h5>
@@ -441,9 +526,12 @@ const PatientRegistration = ({ patients, loading, onRegisterPatient, submitting,
           )}
         </div>
       </div>
+<<<<<<< HEAD
 
       {/* Toast Notifications */}
       <ToastContainer toasts={toasts} onClose={removeToast} />
+=======
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
     </div>
   );
 };

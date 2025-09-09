@@ -12,6 +12,7 @@ import AppointmentScheduler from './components/AppointmentScheduler';
 import PatientRegistration from './components/PatientRegistration';
 import PatientDatabase from './components/PatientDatabase';
 import ReportsModule from './components/ReportsModule';
+<<<<<<< HEAD
 import { ToastContainer } from './components/Toast';
 
 export default function ClinicDashboard() {
@@ -27,6 +28,11 @@ export default function ClinicDashboard() {
   const removeToast = (id) => {
     setToasts(prev => prev.filter(toast => toast.id !== id));
   };
+=======
+
+export default function ClinicDashboard() {
+  const [activeTab, setActiveTab] = useState('status');
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
   const [doctors] = useState([
     {
       id: 1,
@@ -72,11 +78,18 @@ export default function ClinicDashboard() {
     patients,
     loading,
     submitting,
+<<<<<<< HEAD
     lastError,
     registerPatient,
     updatePatient,
     deletePatient
   } = usePatients(addToast);
+=======
+    registerPatient,
+    updatePatient,
+    deletePatient
+  } = usePatients();
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
 
   // Statistics calculations
   const todayStats = useMemo(() => {
@@ -142,7 +155,10 @@ export default function ClinicDashboard() {
             patients={patients}
             loading={loading}
             submitting={submitting}
+<<<<<<< HEAD
             lastError={lastError}
+=======
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
             onRegisterPatient={registerPatient}
           />
         );
@@ -211,7 +227,11 @@ export default function ClinicDashboard() {
                 <Heart size={16} className="text-white" />
               </div>
               <div>
+<<<<<<< HEAD
                 <p className="text-sm font-semibold text-gray-900">Hospital Management System</p>
+=======
+                <p className="text-sm font-semibold text-gray-900">HMS - Hospital Management System</p>
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
                 <p className="text-xs text-gray-500">National Institute of Nephrology, Dialysis and Transplantation</p>
               </div>
             </div>
@@ -226,9 +246,12 @@ export default function ClinicDashboard() {
           </div>
         </footer>
       </main>
+<<<<<<< HEAD
 
       {/* Toast Notifications */}
       <ToastContainer toasts={toasts} onClose={removeToast} />
+=======
+>>>>>>> e8cac8427eae8630a9ad8699b26eb7d5040668b1
     </div>
   );
 }
